@@ -3,10 +3,12 @@ import { useTimer } from './useTimer';
 import { useScore } from './useScore';
 import { useFouls } from './useFouls';
 import { useExits } from './useExits';
+import { playWhistleSound } from '../utils/sounds';
 
 export function useGame() {
   const timer = useTimer();
   const score = useScore();
+  let hasPlayedSound = false; // Evitar reproducir múltiples veces
   
   // Callback para cuando se otorga un punto por faltas
   const handleFoulPoint = (player: 'A' | 'B') => {
@@ -77,10 +79,15 @@ export function useGame() {
     };
   });
 
-  // Detener el juego automáticamente si hay ganador
+  // Detener el juego automáticamente si hay ganador y reproducir sonido
   watch(() => gameStatus.value.isFinished, (isFinished) => {
     if (isFinished) {
       timer.stop();
+      // Reproducir sonido de silbato cuando el juego termina (ganador o tiempo finalizado)
+      if (!hasPlayedSound) {
+        hasPlayedSound = true;
+        playWhistleSound();
+      }
     }
   });
 
@@ -89,6 +96,7 @@ export function useGame() {
     score.reset();
     fouls.reset();
     exits.reset();
+    hasPlayedSound = false; // Resetear el flag al resetear el juego
   };
 
   const startGame = () => {
