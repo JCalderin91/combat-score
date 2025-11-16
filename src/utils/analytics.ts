@@ -10,6 +10,79 @@ declare global {
   }
 }
 
+const USER_ID_STORAGE_KEY = 'combat-score-user-id';
+
+/**
+ * Genera o obtiene un ID único de usuario
+ * Si el usuario ya tiene un ID guardado en localStorage, lo usa
+ * Si no, genera uno nuevo y lo guarda
+ */
+function getOrCreateUserId(): string {
+  try {
+    let userId = localStorage.getItem(USER_ID_STORAGE_KEY);
+    
+    if (!userId) {
+      // Generar un ID único usando timestamp + random + user agent hash
+      const timestamp = Date.now();
+      const random = Math.random().toString(36).substring(2, 15);
+      const userAgentHash = navigator.userAgent
+        .split('')
+        .reduce((acc, char) => acc + char.charCodeAt(0), 0)
+        .toString(36)
+        .substring(0, 8);
+      
+      userId = `user_${timestamp}_${random}_${userAgentHash}`;
+      localStorage.setItem(USER_ID_STORAGE_KEY, userId);
+    }
+    
+    return userId;
+  } catch (error) {
+    console.error('[Analytics] Error getting/creating user ID:', error);
+    // Fallback: generar un ID temporal sin localStorage
+    return `temp_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+  }
+}
+
+/**
+ * Identifica al usuario en Amplitude
+ * Debe llamarse después de que Amplitude esté inicializado
+ */
+export function identifyUser() {
+  try {
+    if (isAmplitudeAvailable()) {
+      const userId = getOrCreateUserId();
+      window.amplitude!.setUserId(userId);
+      
+      // Agregar propiedades del usuario
+      const userProperties = {
+        language: navigator.language || 'unknown',
+        platform: navigator.platform || 'unknown',
+        screenWidth: window.screen.width,
+        screenHeight: window.screen.height,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown',
+        firstSeen: localStorage.getItem(`${USER_ID_STORAGE_KEY}_first_seen`) || new Date().toISOString(),
+      };
+      
+      // Guardar fecha de primera visita si no existe
+      if (!localStorage.getItem(`${USER_ID_STORAGE_KEY}_first_seen`)) {
+        localStorage.setItem(`${USER_ID_STORAGE_KEY}_first_seen`, userProperties.firstSeen);
+      }
+      
+      window.amplitude!.setUserProperties(userProperties);
+      console.log('[Analytics] User identified:', userId);
+    } else {
+      // Si Amplitude no está disponible, intentar de nuevo después de un delay
+      setTimeout(() => {
+        if (isAmplitudeAvailable()) {
+          identifyUser();
+        }
+      }, 500);
+    }
+  } catch (error) {
+    console.error('[Analytics] Error identifying user:', error);
+  }
+}
+
 /**
  * Verifica si Amplitude está disponible
  */

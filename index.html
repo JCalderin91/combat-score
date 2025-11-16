@@ -51,6 +51,14 @@
           });
           
           console.log('[Amplitude] Inicializado correctamente');
+          
+          // Identificar usuario después de inicializar
+          // Esperar un poco para asegurar que Amplitude esté completamente listo
+          setTimeout(function() {
+            if (typeof window.identifyUser === 'function') {
+              window.identifyUser();
+            }
+          }, 200);
         } catch (error) {
           console.error('[Amplitude] Error al inicializar:', error);
         }
