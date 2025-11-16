@@ -28,7 +28,71 @@
     <meta name="robots" content="index, follow" />
 
     <!-- Amplitude -->
-    <script src="https://cdn.amplitude.com/libs/analytics-browser-2.11.1-min.js.gz"></script><script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.23.2-min.js.gz"></script><script>window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('455ee1fbd9c273a8daddac9a87930140', {"autocapture":{"elementInteractions":true}});</script>
+    <script>
+      // Función para inicializar Amplitude de forma segura
+      function initAmplitude() {
+        try {
+          // Verificar si los scripts se cargaron correctamente
+          if (typeof window.amplitude === 'undefined') {
+            console.warn('[Amplitude] Scripts bloqueados o no disponibles');
+            return;
+          }
+
+          // Verificar si sessionReplay está disponible
+          if (typeof window.sessionReplay !== 'undefined' && window.sessionReplay && window.sessionReplay.plugin) {
+            window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));
+          }
+
+          // Inicializar Amplitude
+          window.amplitude.init('455ee1fbd9c273a8daddac9a87930140', {
+            autocapture: {
+              elementInteractions: true
+            }
+          });
+          
+          console.log('[Amplitude] Inicializado correctamente');
+        } catch (error) {
+          console.error('[Amplitude] Error al inicializar:', error);
+        }
+      }
+
+      // Cargar scripts de Amplitude con manejo de errores
+      function loadAmplitudeScripts() {
+        // Cargar analytics-browser
+        const analyticsScript = document.createElement('script');
+        analyticsScript.src = 'https://cdn.amplitude.com/libs/analytics-browser-2.11.1-min.js.gz';
+        analyticsScript.async = true;
+        analyticsScript.onerror = function() {
+          console.warn('[Amplitude] Error al cargar analytics-browser (puede estar bloqueado)');
+          // Intentar inicializar sin session replay
+          setTimeout(initAmplitude, 100);
+        };
+        analyticsScript.onload = function() {
+          // Cargar plugin de session replay
+          const replayScript = document.createElement('script');
+          replayScript.src = 'https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.23.2-min.js.gz';
+          replayScript.async = true;
+          replayScript.onerror = function() {
+            console.warn('[Amplitude] Error al cargar session-replay (puede estar bloqueado)');
+            // Inicializar sin session replay
+            setTimeout(initAmplitude, 100);
+          };
+          replayScript.onload = function() {
+            // Inicializar después de cargar ambos scripts
+            setTimeout(initAmplitude, 100);
+          };
+          document.head.appendChild(replayScript);
+        };
+        document.head.appendChild(analyticsScript);
+      }
+
+      // Iniciar carga cuando el DOM esté listo
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadAmplitudeScripts);
+      } else {
+        loadAmplitudeScripts();
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
