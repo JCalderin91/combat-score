@@ -28,8 +28,8 @@ export function useTimeline() {
     };
     
     events.value.push(event);
-    // Ordenar por tiempo (más reciente primero)
-    events.value.sort((a: TimelineEvent, b: TimelineEvent) => b.time - a.time);
+    // Ordenar por tiempo (más antiguo primero)
+    events.value.sort((a: TimelineEvent, b: TimelineEvent) => a.time - b.time);
   };
 
   const getEventDescription = (type: 'point' | 'foul' | 'exit', player: 'A' | 'B', value: number): string => {
