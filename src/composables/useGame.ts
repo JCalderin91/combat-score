@@ -93,18 +93,18 @@ export function useGame() {
     }
   });
 
-  // Capturar eventos de puntos
+  // Capturar eventos de puntos (tanto sumas como restas)
   watch(() => score.scoreA.value, (newScore, oldScore) => {
-    if (oldScore !== undefined && newScore > oldScore && timer.isRunning.value) {
-      const pointsAdded = newScore - oldScore;
-      timeline.addEvent('point', 'A', pointsAdded, timer.timeElapsed.value);
+    if (oldScore !== undefined && newScore !== oldScore && timer.isRunning.value) {
+      const pointsChanged = newScore - oldScore;
+      timeline.addEvent('point', 'A', pointsChanged, timer.timeElapsed.value);
     }
   });
 
   watch(() => score.scoreB.value, (newScore, oldScore) => {
-    if (oldScore !== undefined && newScore > oldScore && timer.isRunning.value) {
-      const pointsAdded = newScore - oldScore;
-      timeline.addEvent('point', 'B', pointsAdded, timer.timeElapsed.value);
+    if (oldScore !== undefined && newScore !== oldScore && timer.isRunning.value) {
+      const pointsChanged = newScore - oldScore;
+      timeline.addEvent('point', 'B', pointsChanged, timer.timeElapsed.value);
     }
   });
 

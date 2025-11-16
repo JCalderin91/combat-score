@@ -29,18 +29,21 @@ export function useTimeline() {
     
     events.value.push(event);
     // Ordenar por tiempo (más reciente primero)
-    events.value.sort((a, b) => b.time - a.time);
+    events.value.sort((a: TimelineEvent, b: TimelineEvent) => b.time - a.time);
   };
 
   const getEventDescription = (type: 'point' | 'foul' | 'exit', player: 'A' | 'B', value: number): string => {
+    const playerName = player === 'A' ? 'Jugador A' : 'Jugador B';
+    const sign = value >= 0 ? '+' : '';
+    const absValue = Math.abs(value);
     
     switch (type) {
       case 'point':
-        return `Peleador +${value} punto${value > 1 ? 's' : ''}`;
+        return `${playerName} ${sign}${value} punto${absValue !== 1 ? 's' : ''}`;
       case 'foul':
-        return `Peleador +${value} falta${value > 1 ? 's' : ''}`;
+        return `${playerName} ${sign}${value} falta${absValue !== 1 ? 's' : ''}`;
       case 'exit':
-        return `Peleador +${value} salida${value > 1 ? 's' : ''}`;
+        return `${playerName} ${sign}${value} salida${absValue !== 1 ? 's' : ''}`;
       default:
         return '';
     }
