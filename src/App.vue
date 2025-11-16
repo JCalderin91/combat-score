@@ -247,5 +247,10 @@ const { openTimeline } = game.timeline;
       </div>
 
     </div>
+
+    <!-- Texto flotante sutil -->
+    <div class="fixed bottom-2 left-1/2 transform -translate-x-1/2 z-10">
+      <span class="text-gray-300 text-xs font-light opacity-90">ATIN</span>
+    </div>
   </div>
 </template>
