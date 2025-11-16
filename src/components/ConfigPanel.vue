@@ -110,10 +110,10 @@ const handleClose = () => {
             </p>
           </div>
 
-          <!-- Salidas para amonestación -->
+          <!-- Salidas para punto al oponente -->
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">
-              Salidas para amonestación
+              Salidas para otorgar punto al oponente
             </label>
             <input
               v-model.number="formData.exitsForWarning"
@@ -123,7 +123,7 @@ const handleClose = () => {
               required
             />
             <p class="mt-1 text-xs text-gray-600">
-              Cada {{ formData.exitsForWarning }} salida(s) otorga 1 falta
+              Cada {{ formData.exitsForWarning }} salida(s) otorga 1 punto al oponente
             </p>
           </div>
 

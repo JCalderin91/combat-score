@@ -24,12 +24,15 @@ export function useGame() {
 
   const fouls = useFouls(handleFoulPoint);
   
-  // Callback para cuando se alcanza el máximo de salidas (3 salidas = 1 falta)
+  // Callback para cuando se alcanza el máximo de salidas (3 salidas = 1 punto al oponente)
   const handleMaxExitsReached = (player: 'A' | 'B') => {
+    // Otorgar punto al oponente
     if (player === 'A') {
-      fouls.addFoulA();
+      // Jugador A tiene 3 salidas, otorgar punto a B
+      score.addPointsB(1);
     } else {
-      fouls.addFoulB();
+      // Jugador B tiene 3 salidas, otorgar punto a A
+      score.addPointsA(1);
     }
   };
 
