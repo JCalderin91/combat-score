@@ -29,57 +29,52 @@ const colorClasses = {
 
 <template>
   <div 
-    class="bg-gray-800 rounded-xl sm:rounded-2xl shadow-xl p-3 sm:p-4 md:p-6 border"
+    class="bg-gray-800 rounded-xl sm:rounded-2xl landscape:rounded-lg shadow-xl p-3 sm:p-4 md:p-6 landscape:p-2 border"
     :class="colorClasses[color].border">
-    <h3 
-      class="text-sm sm:text-base md:text-xl font-bold text-center mb-2 sm:mb-3 md:mb-4"
-      :class="colorClasses[color].title">
-      Controles {{ playerName }}
-    </h3>
-    <div class="space-y-2 sm:space-y-3">
-      <div class="flex gap-2 sm:gap-3">
+    <div class="space-y-2 sm:space-y-3 landscape:space-y-1">
+      <div class="flex gap-2 sm:gap-3 landscape:gap-1">
         <button 
           @click="emit('addPoints', 1)"
-          class="flex-1 text-white text-base sm:text-lg md:text-xl font-bold py-3 sm:py-4 rounded-lg shadow-lg active:scale-95 transition-all"
+          class="flex-1 text-white text-base sm:text-lg md:text-xl landscape:text-sm font-bold py-3 sm:py-4 landscape:py-2 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all"
           :class="colorClasses[color].btnDark"
           :style="reverse ? 'order: 2' : 'order: 1'">
           +1
         </button>
         <button 
           @click="emit('addPoints', -1)"
-          class="flex-1 text-white text-base sm:text-lg md:text-xl font-bold py-3 sm:py-4 rounded-lg shadow-lg active:scale-95 transition-all"
+          class="flex-1 text-white text-base sm:text-lg md:text-xl landscape:text-sm font-bold py-3 sm:py-4 landscape:py-2 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all"
           :class="colorClasses[color].btnLight"
           :style="reverse ? 'order: 1' : 'order: 2'">
           -1
         </button>
       </div>
-      <div class="flex gap-2 sm:gap-3">
+      <div class="flex gap-2 sm:gap-3 landscape:gap-1">
         <button 
           @click="emit('addPoints', 2)"
-          class="flex-1 text-white text-base sm:text-lg md:text-xl font-bold py-3 sm:py-4 rounded-lg shadow-lg active:scale-95 transition-all"
+          class="flex-1 text-white text-base sm:text-lg md:text-xl landscape:text-sm font-bold py-3 sm:py-4 landscape:py-2 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all"
           :class="colorClasses[color].btnDark"
           :style="reverse ? 'order: 2' : 'order: 1'">
           +2
         </button>
         <button 
           @click="emit('addPoints', -2)"
-          class="flex-1 text-white text-base sm:text-lg md:text-xl font-bold py-3 sm:py-4 rounded-lg shadow-lg active:scale-95 transition-all"
+          class="flex-1 text-white text-base sm:text-lg md:text-xl landscape:text-sm font-bold py-3 sm:py-4 landscape:py-2 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all"
           :class="colorClasses[color].btnLight"
           :style="reverse ? 'order: 1' : 'order: 2'">
           -2
         </button>
       </div>
-      <div class="flex gap-2 sm:gap-3">
+      <div class="flex gap-2 sm:gap-3 landscape:gap-1">
         <button 
           @click="emit('addPoints', 3)"
-          class="flex-1 text-white text-base sm:text-lg md:text-xl font-bold py-3 sm:py-4 rounded-lg shadow-lg active:scale-95 transition-all"
+          class="flex-1 text-white text-base sm:text-lg md:text-xl landscape:text-sm font-bold py-3 sm:py-4 landscape:py-2 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all"
           :class="colorClasses[color].btnDark"
           :style="reverse ? 'order: 2' : 'order: 1'">
           +3
         </button>
         <button 
           @click="emit('addPoints', -3)"
-          class="flex-1 text-white text-base sm:text-lg md:text-xl font-bold py-3 sm:py-4 rounded-lg shadow-lg active:scale-95 transition-all"
+          class="flex-1 text-white text-base sm:text-lg md:text-xl landscape:text-sm font-bold py-3 sm:py-4 landscape:py-2 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all"
           :class="colorClasses[color].btnLight"
           :style="reverse ? 'order: 1' : 'order: 2'">
           -3

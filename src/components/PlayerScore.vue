@@ -21,12 +21,9 @@ const colorClasses = {
 
 <template>
   <div 
-    class="rounded-xl sm:rounded-2xl shadow-2xl p-2 sm:p-6 md:p-8 border-2 sm:border-4"
+    class="rounded-xl sm:rounded-2xl landscape:rounded-lg shadow-2xl p-2 sm:p-6 md:p-8 landscape:p-2 border-2 sm:border-4 landscape:border-2"
     :class="[colorClasses[color].bg, colorClasses[color].border]">
-    <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white text-center mb-2 sm:mb-4">
-      {{ playerName }}
-    </h2>
-    <div class="text-6xl sm:text-7xl md:text-9xl font-bold text-white text-center font-mono">
+    <div class="text-6xl sm:text-7xl md:text-9xl landscape:text-5xl font-bold text-white text-center font-mono">
       {{ score }}
     </div>
   </div>

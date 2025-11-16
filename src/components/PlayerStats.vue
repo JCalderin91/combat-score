@@ -45,27 +45,27 @@ const colorClasses = {
 
 <template>
   <div 
-    class="bg-gray-800 rounded-lg sm:rounded-xl shadow-xl p-3 sm:p-4 md:p-6 border"
+    class="bg-gray-800 rounded-lg sm:rounded-xl landscape:rounded shadow-xl p-2 sm:p-4 md:p-6 landscape:p-2 border"
     :class="colorClasses[color].border">
-    <div class="flex items-center justify-between gap-2 sm:gap-4">
+    <div class="flex items-center justify-between gap-2 sm:gap-4 landscape:gap-1">
       <button 
         @click="emit('add')"
-        class="text-white text-base sm:text-lg font-bold px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-3 rounded-lg shadow-lg active:scale-95 transition-all"
+        class="text-white text-base sm:text-lg landscape:text-sm font-bold px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-3 landscape:px-2 landscape:py-1.5 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all"
         :class="colorClasses[color].btnLight"
         :style="reverse ? 'order: 3' : 'order: 1'">
         +1
       </button>
       <div class="text-center flex-1" :style="'order: 2'">
         <div 
-          class="text-[10px] sm:text-xs md:text-sm font-semibold uppercase tracking-wider mb-0.5 sm:mb-1"
+          class="text-[10px] sm:text-xs md:text-sm landscape:text-[8px] font-semibold uppercase tracking-wider mb-0.5 sm:mb-1 landscape:mb-0"
           :class="colorClasses[color].label">
           {{ label }} {{ playerName }}
         </div>
-        <div class="text-white text-2xl sm:text-3xl font-bold font-mono">{{ count }}</div>
+        <div class="text-white text-2xl sm:text-3xl landscape:text-xl font-bold font-mono">{{ count }}</div>
       </div>
       <button 
         @click="emit('remove')"
-        class="text-white text-base sm:text-lg font-bold px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-3 rounded-lg shadow-lg active:scale-95 transition-all"
+        class="text-white text-base sm:text-lg landscape:text-sm font-bold px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-3 landscape:px-2 landscape:py-1.5 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all"
         :class=" colorClasses[color].btnDark"
         :style="reverse ? 'order: 1' : 'order: 3'">
         -1
