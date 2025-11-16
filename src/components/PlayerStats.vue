@@ -17,35 +17,35 @@ const emit = defineEmits<{
 
 const colorClasses = {
   yellow: {
-    border: 'border-yellow-600',
-    label: 'text-yellow-400',
-    btnLight: 'bg-yellow-600 hover:bg-yellow-500 active:bg-yellow-700',
-    btnDark: 'bg-yellow-700 hover:bg-yellow-600 active:bg-yellow-800'
+    border: 'border-yellow-500',
+    label: 'text-yellow-600',
+    btnLight: 'bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600',
+    btnDark: 'bg-yellow-600 hover:bg-yellow-500 active:bg-yellow-700'
   },
   orange: {
-    border: 'border-orange-600',
-    label: 'text-orange-400',
-    btnLight: 'bg-orange-600 hover:bg-orange-500 active:bg-orange-700',
-    btnDark: 'bg-orange-700 hover:bg-orange-600 active:bg-orange-800'
+    border: 'border-orange-500',
+    label: 'text-orange-600',
+    btnLight: 'bg-orange-500 hover:bg-orange-400 active:bg-orange-600',
+    btnDark: 'bg-orange-600 hover:bg-orange-500 active:bg-orange-700'
   },
   cyan: {
-    border: 'border-cyan-600',
-    label: 'text-cyan-400',
-    btnLight: 'bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-700',
-    btnDark: 'bg-cyan-700 hover:bg-cyan-600 active:bg-cyan-800'
+    border: 'border-cyan-500',
+    label: 'text-cyan-600',
+    btnLight: 'bg-cyan-500 hover:bg-cyan-400 active:bg-cyan-600',
+    btnDark: 'bg-cyan-600 hover:bg-cyan-500 active:bg-cyan-700'
   },
   teal: {
-    border: 'border-teal-600',
-    label: 'text-teal-400',
-    btnLight: 'bg-teal-600 hover:bg-teal-500 active:bg-teal-700',
-    btnDark: 'bg-teal-700 hover:bg-teal-600 active:bg-teal-800'
+    border: 'border-teal-500',
+    label: 'text-teal-600',
+    btnLight: 'bg-teal-500 hover:bg-teal-400 active:bg-teal-600',
+    btnDark: 'bg-teal-600 hover:bg-teal-500 active:bg-teal-700'
   }
 };
 </script>
 
 <template>
   <div 
-    class="bg-gray-800 rounded-lg sm:rounded-xl landscape:rounded shadow-xl p-2 sm:p-4 md:p-6 landscape:p-2 border"
+    class="bg-white rounded-lg sm:rounded-xl landscape:rounded shadow-xl p-2 sm:p-4 md:p-6 landscape:p-2 border-2"
     :class="colorClasses[color].border">
     <div class="flex items-center justify-between gap-2 sm:gap-4 landscape:gap-1">
       <button 
@@ -61,7 +61,7 @@ const colorClasses = {
           :class="colorClasses[color].label">
           {{ label }} {{ playerName }}
         </div>
-        <div class="text-white text-2xl sm:text-3xl landscape:text-xl font-bold font-mono">{{ count }}</div>
+        <div class="text-gray-900 text-2xl sm:text-3xl landscape:text-xl font-bold font-mono text-slate-800">{{ count }}</div>
       </div>
       <button 
         @click="emit('remove')"

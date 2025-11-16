@@ -43,15 +43,15 @@ const statusIcon = computed(() => {
 </script>
 
 <template>
-  <div class="bg-gray-800 rounded-lg sm:rounded-xl landscape:rounded shadow-xl p-2 sm:p-3 landscape:p-2 border border-gray-700">
+  <div class="bg-white rounded-lg sm:rounded-xl landscape:rounded shadow-xl p-2 sm:p-3 landscape:p-2 border border-gray-300">
     <div class="flex justify-center items-center text-2xl sm:text-3xl md:text-4xl landscape:text-2xl font-bold font-mono tracking-wide">
       <span 
         class="px-2 py-1 sm:px-3 sm:py-1.5 landscape:px-2 landscape:py-0.5 rounded-md transition-colors duration-300"
         :class="{
-          'bg-red-700 text-white': getStatusColor === 'red',
-          'bg-green-700 text-white': getStatusColor === 'green',
-          'bg-yellow-600 text-white': getStatusColor === 'yellow',
-          'bg-gray-700 text-white': getStatusColor === 'gray'
+          'bg-red-600 text-white': getStatusColor === 'red',
+          'bg-green-300 text-black': getStatusColor === 'green',
+          'bg-yellow-300 text-black': getStatusColor === 'yellow',
+          'bg-gray-200 text-black': getStatusColor === 'gray'
         }">
         {{ formattedMinutes }}
       </span>
@@ -66,10 +66,10 @@ const statusIcon = computed(() => {
       <span 
         class="px-2 py-1 sm:px-3 sm:py-1.5 landscape:px-2 landscape:py-0.5 rounded-md transition-colors duration-300"
         :class="{
-          'bg-red-700 text-white': getStatusColor === 'red',
-          'bg-green-700 text-white': getStatusColor === 'green',
-          'bg-yellow-600 text-white': getStatusColor === 'yellow',
-          'bg-gray-700 text-white': getStatusColor === 'gray'
+          'bg-red-600 text-white': getStatusColor === 'red',
+          'bg-green-300 text-black': getStatusColor === 'green',
+          'bg-yellow-300 text-black': getStatusColor === 'yellow',
+          'bg-gray-200 text-black': getStatusColor === 'gray'
         }">
         {{ formattedSeconds }}
       </span>
@@ -79,9 +79,9 @@ const statusIcon = computed(() => {
         class="inline-flex items-center ml-3 landscape:ml-2 px-2 py-0.5 sm:px-2.5 sm:py-1 landscape:px-1.5 landscape:py-0.5 rounded-full text-[9px] sm:text-[10px] landscape:text-[8px] font-semibold transition-colors duration-300"
         :class="{
           'bg-red-600 text-white': getStatusColor === 'red',
-          'bg-green-600 text-white': getStatusColor === 'green',
-          'bg-yellow-600 text-white': getStatusColor === 'yellow',
-          'bg-gray-600 text-white': getStatusColor === 'gray'
+          'bg-green-300 text-black': getStatusColor === 'green',
+          'bg-yellow-300 text-black': getStatusColor === 'yellow',
+          'bg-gray-200 text-black': getStatusColor === 'gray'
         }">
         <span 
           class="w-1 h-1 sm:w-1.5 sm:h-1.5 landscape:w-1 landscape:h-1 rounded-full mr-1"
@@ -95,19 +95,19 @@ const statusIcon = computed(() => {
       <button 
         @click="handleToggleTimer" 
         :disabled="isFinished"
-        class="bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold px-4 py-2 sm:px-5 sm:py-2.5 landscape:px-3 landscape:py-1.5 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all duration-200 min-w-[80px] sm:min-w-[90px] landscape:min-w-[60px] text-xs sm:text-sm landscape:text-xs">
-        {{ isRunning ? 'Pause' : 'Start' }}
+        class="bg-green-600 hover:bg-green-700 active:bg-green-800 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold px-4 py-2 sm:px-5 sm:py-2.5 landscape:px-3 landscape:py-1.5 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all duration-200 min-w-[80px] sm:min-w-[90px] landscape:min-w-[60px] text-xs sm:text-sm landscape:text-xs">
+        {{ isRunning ? 'Pause' : 'Play' }}
       </button>
       <button 
         @click="emit('reset')"
         class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold px-4 py-2 sm:px-5 sm:py-2.5 landscape:px-3 landscape:py-1.5 rounded-lg landscape:rounded shadow-lg active:scale-95 transition-all duration-200 text-xs sm:text-sm landscape:text-xs">
-        Reset
+        Reiniciar
       </button>
     </div>
 
     <!-- Game Status Messages -->
     <div v-if="isFinished" class="mt-2 landscape:mt-1 text-center">
-      <div class="bg-yellow-500 text-gray-900 font-bold text-sm sm:text-base landscape:text-xs py-1.5 px-3 sm:py-2 sm:px-4 landscape:py-1 landscape:px-2 rounded-lg landscape:rounded inline-block">
+      <div class="bg-yellow-400 text-gray-900 font-bold text-sm sm:text-base landscape:text-xs py-1.5 px-3 sm:py-2 sm:px-4 landscape:py-1 landscape:px-2 rounded-lg landscape:rounded inline-block shadow-md">
         <span v-if="winner">
           ¡Jugador {{ winner }} GANA!
           <span class="hidden sm:inline" v-if="reason === 'points'"> (Puntos)</span>

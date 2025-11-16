@@ -14,14 +14,14 @@ const { isFullscreen, toggleFullscreen } = useFullscreen();
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-2 sm:p-4 md:p-8 relative">
+  <div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 p-2 sm:p-4 md:p-8 relative">
     
     <!-- Botones flotantes superiores -->
     <div class="fixed top-2 right-2 sm:top-3 sm:right-3 z-30 flex gap-2">
       <!-- Botón de pantalla completa -->
       <button
         @click="toggleFullscreen"
-        class="bg-gray-800/50 hover:bg-gray-700/70 text-gray-400 hover:text-gray-300 p-1.5 sm:p-2 rounded-lg shadow-sm transition-all hover:scale-105 active:scale-95 backdrop-blur-sm"
+        class="bg-white/80 hover:bg-gray-100 text-gray-600 hover:text-gray-800 p-1.5 sm:p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 backdrop-blur-sm border border-gray-200"
         :aria-label="isFullscreen ? 'Salir de pantalla completa' : 'Pantalla completa'"
       >
         <!-- Icono de expandir (cuando NO está en pantalla completa) -->
@@ -37,7 +37,7 @@ const { isFullscreen, toggleFullscreen } = useFullscreen();
       <!-- Botón flotante de configuración -->
       <button
         @click="openConfig"
-        class="bg-gray-800/50 hover:bg-gray-700/70 text-gray-400 hover:text-gray-300 p-1.5 sm:p-2 rounded-lg shadow-sm transition-all hover:scale-105 active:scale-95 backdrop-blur-sm"
+        class="bg-white/80 hover:bg-gray-100 text-gray-600 hover:text-gray-800 p-1.5 sm:p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 backdrop-blur-sm border border-gray-200"
         aria-label="Configuración"
       >
         <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

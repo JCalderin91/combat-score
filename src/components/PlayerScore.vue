@@ -9,11 +9,11 @@ defineProps<Props>();
 
 const colorClasses = {
   red: {
-    bg: 'bg-red-900',
+    bg: 'bg-red-500',
     border: 'border-red-600'
   },
   blue: {
-    bg: 'bg-blue-900',
+    bg: 'bg-blue-500',
     border: 'border-blue-600'
   }
 };

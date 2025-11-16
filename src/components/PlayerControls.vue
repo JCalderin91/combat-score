@@ -13,23 +13,23 @@ const emit = defineEmits<{
 
 const colorClasses = {
   red: {
-    border: 'border-red-600',
-    title: 'text-red-400',
-    btnLight: 'bg-red-600 hover:bg-red-500 active:bg-red-700',
-    btnDark: 'bg-red-700 hover:bg-red-600 active:bg-red-800'
+    border: 'border-red-500',
+    title: 'text-red-600',
+    btnLight: 'bg-red-500 hover:bg-red-400 active:bg-red-600',
+    btnDark: 'bg-red-600 hover:bg-red-500 active:bg-red-700'
   },
   blue: {
-    border: 'border-blue-600',
-    title: 'text-blue-400',
-    btnLight: 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700',
-    btnDark: 'bg-blue-700 hover:bg-blue-600 active:bg-blue-800'
+    border: 'border-blue-500',
+    title: 'text-blue-600',
+    btnLight: 'bg-blue-500 hover:bg-blue-400 active:bg-blue-600',
+    btnDark: 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700'
   }
 };
 </script>
 
 <template>
   <div 
-    class="bg-gray-800 rounded-xl sm:rounded-2xl landscape:rounded-lg shadow-xl p-3 sm:p-4 md:p-6 landscape:p-2 border"
+    class="bg-white rounded-xl sm:rounded-2xl landscape:rounded-lg shadow-xl p-3 sm:p-4 md:p-6 landscape:p-2 border-2"
     :class="colorClasses[color].border">
     <div class="space-y-2 sm:space-y-3 landscape:space-y-1">
       <div class="flex gap-2 sm:gap-3 landscape:gap-1">
