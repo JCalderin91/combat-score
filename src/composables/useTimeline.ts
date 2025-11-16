@@ -34,7 +34,7 @@ export function useTimeline() {
   };
 
   const getEventDescription = (type: 'point' | 'foul' | 'exit', player: 'A' | 'B', value: number): string => {
-    const playerName = player === 'A' ? 'Jugador A' : 'Jugador B';
+    const playerName = player === 'A' ? 'Peleador A' : 'Peleador B';
     const sign = value >= 0 ? '+' : '';
     const absValue = Math.abs(value);
     

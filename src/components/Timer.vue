@@ -28,10 +28,24 @@ const handleToggleTimer = () => {
 };
 
 const getStatusColor = computed(() => {
+  // Si hay ganador, usar el color del ganador
+  if (props.isFinished && props.winner === 'A') return 'winner-red';
+  if (props.isFinished && props.winner === 'B') return 'winner-blue';
   if (props.isRunning && props.timeRemaining <= 10) return 'red';
   if (props.isRunning && props.timeRemaining > 10) return 'green';
   if (!props.isRunning && props.timeRemaining < 90) return 'yellow';
   return 'gray';
+});
+
+const getContainerColor = computed(() => {
+  // Resaltar el contenedor con el color del ganador
+  if (props.isFinished && props.winner === 'A') {
+    return 'bg-red-500 border-red-600 shadow-red-500/50';
+  }
+  if (props.isFinished && props.winner === 'B') {
+    return 'bg-blue-500 border-blue-600 shadow-blue-500/50';
+  }
+  return 'bg-white border-gray-300';
 });
 
 const statusIcon = computed(() => {
@@ -43,7 +57,9 @@ const statusIcon = computed(() => {
 </script>
 
 <template>
-  <div class="bg-white rounded-lg sm:rounded-xl landscape:rounded shadow-xl p-2 sm:p-3 landscape:p-2 border border-gray-300">
+  <div 
+    class="rounded-lg sm:rounded-xl landscape:rounded shadow-xl p-2 sm:p-3 landscape:p-2 border-2 transition-all duration-500"
+    :class="getContainerColor">
     <div class="flex justify-center items-center text-2xl sm:text-3xl md:text-4xl landscape:text-2xl font-bold font-mono tracking-wide">
       <span 
         class="px-2 py-1 sm:px-3 sm:py-1.5 landscape:px-2 landscape:py-0.5 rounded-md transition-colors duration-300"
@@ -51,7 +67,9 @@ const statusIcon = computed(() => {
           'bg-red-600 text-white': getStatusColor === 'red',
           'bg-green-300 text-black': getStatusColor === 'green',
           'bg-yellow-300 text-black': getStatusColor === 'yellow',
-          'bg-gray-200 text-black': getStatusColor === 'gray'
+          'bg-gray-200 text-black': getStatusColor === 'gray',
+          'bg-red-700 text-white': getStatusColor === 'winner-red',
+          'bg-blue-700 text-white': getStatusColor === 'winner-blue'
         }">
         {{ formattedMinutes }}
       </span>
@@ -61,7 +79,9 @@ const statusIcon = computed(() => {
           'text-red-400': getStatusColor === 'red',
           'text-green-400': getStatusColor === 'green',
           'text-yellow-400': getStatusColor === 'yellow',
-          'text-gray-400': getStatusColor === 'gray'
+          'text-gray-400': getStatusColor === 'gray',
+          'text-red-200': getStatusColor === 'winner-red',
+          'text-blue-200': getStatusColor === 'winner-blue'
         }">:</span>
       <span 
         class="px-2 py-1 sm:px-3 sm:py-1.5 landscape:px-2 landscape:py-0.5 rounded-md transition-colors duration-300"
@@ -69,7 +89,9 @@ const statusIcon = computed(() => {
           'bg-red-600 text-white': getStatusColor === 'red',
           'bg-green-300 text-black': getStatusColor === 'green',
           'bg-yellow-300 text-black': getStatusColor === 'yellow',
-          'bg-gray-200 text-black': getStatusColor === 'gray'
+          'bg-gray-200 text-black': getStatusColor === 'gray',
+          'bg-red-700 text-white': getStatusColor === 'winner-red',
+          'bg-blue-700 text-white': getStatusColor === 'winner-blue'
         }">
         {{ formattedSeconds }}
       </span>
@@ -81,7 +103,9 @@ const statusIcon = computed(() => {
           'bg-red-600 text-white': getStatusColor === 'red',
           'bg-green-300 text-black': getStatusColor === 'green',
           'bg-yellow-300 text-black': getStatusColor === 'yellow',
-          'bg-gray-200 text-black': getStatusColor === 'gray'
+          'bg-gray-200 text-black': getStatusColor === 'gray',
+          'bg-red-700 text-white': getStatusColor === 'winner-red',
+          'bg-blue-700 text-white': getStatusColor === 'winner-blue'
         }">
         <span 
           class="w-1 h-1 sm:w-1.5 sm:h-1.5 landscape:w-1 landscape:h-1 rounded-full mr-1"
@@ -107,9 +131,15 @@ const statusIcon = computed(() => {
 
     <!-- Game Status Messages -->
     <div v-if="isFinished" class="mt-2 landscape:mt-1 text-center">
-      <div class="bg-yellow-400 text-gray-900 font-bold text-sm sm:text-base landscape:text-xs py-1.5 px-3 sm:py-2 sm:px-4 landscape:py-1 landscape:px-2 rounded-lg landscape:rounded inline-block shadow-md">
+      <div 
+        class="font-bold text-sm sm:text-base landscape:text-xs py-1.5 px-3 sm:py-2 sm:px-4 landscape:py-1 landscape:px-2 rounded-lg landscape:rounded inline-block shadow-md transition-all duration-500"
+        :class="{
+          'bg-red-600 text-white': winner === 'A',
+          'bg-blue-600 text-white': winner === 'B',
+          'bg-yellow-400 text-gray-900': !winner
+        }">
         <span v-if="winner">
-          ¡Jugador {{ winner }} GANA!
+          ¡Peleador {{ winner }} GANA!
           <span class="hidden sm:inline" v-if="reason === 'points'"> (Puntos)</span>
           <span class="hidden sm:inline" v-else-if="reason === 'time'"> (Tiempo)</span>
           <span class="hidden sm:inline" v-else-if="reason === 'infractions'"> (Infracciones)</span>

@@ -28,10 +28,10 @@ export function useGame() {
   const handleMaxExitsReached = (player: 'A' | 'B') => {
     // Otorgar punto al oponente
     if (player === 'A') {
-      // Jugador A tiene 3 salidas, otorgar punto a B
+      // Peleador A tiene 3 salidas, otorgar punto a B
       score.addPointsB(1);
     } else {
-      // Jugador B tiene 3 salidas, otorgar punto a A
+      // Peleador B tiene 3 salidas, otorgar punto a A
       score.addPointsA(1);
     }
   };

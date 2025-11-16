@@ -8,13 +8,13 @@ export function useFouls(onPointAwarded: (player: 'A' | 'B') => void) {
   // Vigilar cuando las faltas alcanzan el límite para otorgar puntos
   watch(foulsA, (newFouls) => {
     if (newFouls > 0 && newFouls % gameConfig.foulsForPoint === 0) {
-      onPointAwarded('B'); // El jugador B recibe un punto
+      onPointAwarded('B'); // El peleador B recibe un punto
     }
   });
 
   watch(foulsB, (newFouls) => {
     if (newFouls > 0 && newFouls % gameConfig.foulsForPoint === 0) {
-      onPointAwarded('A'); // El jugador A recibe un punto
+      onPointAwarded('A'); // El peleador A recibe un punto
     }
   });
 

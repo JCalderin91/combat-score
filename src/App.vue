@@ -89,12 +89,12 @@ const { openTimeline } = game.timeline;
       <div class="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6">
         <PlayerScore 
           :score="game.scoreA.value"
-          player-name="Jugador A"
+          player-name="Peleador A"
           color="red"
         />
         <PlayerScore 
           :score="game.scoreB.value"
-          player-name="Jugador B"
+          player-name="Peleador B"
           color="blue"
         />
       </div>
@@ -163,7 +163,7 @@ const { openTimeline } = game.timeline;
     <!-- Layout Landscape (horizontal) - 3 columnas -->
     <div class="hidden landscape:grid landscape:grid-cols-3 gap-2 h-screen max-h-screen overflow-hidden">
       
-      <!-- Columna 1: Jugador A -->
+      <!-- Columna 1: Peleador A -->
       <div class="flex flex-col gap-2 py-2 pl-2 overflow-y-auto">
         <PlayerControls 
           player-name="A"
@@ -206,18 +206,18 @@ const { openTimeline } = game.timeline;
         <div class="w-full grid grid-cols-2 gap-2">
           <PlayerScore 
             :score="game.scoreA.value"
-            player-name="Jugador A"
+            player-name="Peleador A"
             color="red"
           />
           <PlayerScore 
             :score="game.scoreB.value"
-            player-name="Jugador B"
+            player-name="Peleador B"
             color="blue"
           />
         </div>
       </div>
 
-      <!-- Columna 3: Jugador B -->
+      <!-- Columna 3: Peleador B -->
       <div class="flex flex-col gap-2 py-2 pr-2 overflow-y-auto">
         <PlayerControls 
           player-name="B"
