@@ -5,6 +5,7 @@ import { useFouls } from './useFouls';
 import { useExits } from './useExits';
 import { useTimeline } from './useTimeline';
 import { playWhistleSound } from '../utils/sounds';
+import { trackEvent, GameEvents } from '../utils/analytics';
 
 export function useGame() {
   const timer = useTimer();
@@ -82,13 +83,25 @@ export function useGame() {
   });
 
   // Detener el juego automáticamente si hay ganador y reproducir sonido
-  watch(() => gameStatus.value.isFinished, (isFinished) => {
-    if (isFinished) {
+  watch(() => gameStatus.value.isFinished, (isFinished, oldIsFinished) => {
+    if (isFinished && !oldIsFinished) {
       timer.stop();
       // Reproducir sonido de silbato cuando el juego termina (ganador o tiempo finalizado)
       if (!hasPlayedSound) {
         hasPlayedSound = true;
         playWhistleSound();
+        // Trackear fin del juego
+        trackEvent(GameEvents.GAME_FINISHED, {
+          winner: gameStatus.value.winner,
+          reason: gameStatus.value.reason,
+          scoreA: score.scoreA.value,
+          scoreB: score.scoreB.value,
+          foulsA: fouls.foulsA.value,
+          foulsB: fouls.foulsB.value,
+          exitsA: exits.exitsA.value,
+          exitsB: exits.exitsB.value,
+          timeElapsed: timer.timeElapsed.value,
+        });
       }
     }
   });
@@ -98,6 +111,14 @@ export function useGame() {
     if (oldScore !== undefined && newScore !== oldScore && timer.isRunning.value) {
       const pointsChanged = newScore - oldScore;
       timeline.addEvent('point', 'A', pointsChanged, timer.timeElapsed.value);
+      // Trackear en Amplitude
+      trackEvent(pointsChanged > 0 ? GameEvents.POINTS_ADDED : GameEvents.POINTS_REMOVED, {
+        player: 'A',
+        points: Math.abs(pointsChanged),
+        newScore,
+        oldScore,
+        timeElapsed: timer.timeElapsed.value,
+      });
     }
   });
 
@@ -105,36 +126,76 @@ export function useGame() {
     if (oldScore !== undefined && newScore !== oldScore && timer.isRunning.value) {
       const pointsChanged = newScore - oldScore;
       timeline.addEvent('point', 'B', pointsChanged, timer.timeElapsed.value);
+      // Trackear en Amplitude
+      trackEvent(pointsChanged > 0 ? GameEvents.POINTS_ADDED : GameEvents.POINTS_REMOVED, {
+        player: 'B',
+        points: Math.abs(pointsChanged),
+        newScore,
+        oldScore,
+        timeElapsed: timer.timeElapsed.value,
+      });
     }
   });
 
   // Capturar eventos de faltas
   watch(() => fouls.foulsA.value, (newFouls, oldFouls) => {
-    if (oldFouls !== undefined && newFouls > oldFouls && timer.isRunning.value) {
-      const foulsAdded = newFouls - oldFouls;
-      timeline.addEvent('foul', 'A', foulsAdded, timer.timeElapsed.value);
+    if (oldFouls !== undefined && newFouls !== oldFouls && timer.isRunning.value) {
+      const foulsChanged = newFouls - oldFouls;
+      timeline.addEvent('foul', 'A', foulsChanged, timer.timeElapsed.value);
+      // Trackear en Amplitude
+      trackEvent(foulsChanged > 0 ? GameEvents.FOUL_ADDED : GameEvents.FOUL_REMOVED, {
+        player: 'A',
+        fouls: Math.abs(foulsChanged),
+        newFouls,
+        oldFouls,
+        timeElapsed: timer.timeElapsed.value,
+      });
     }
   });
 
   watch(() => fouls.foulsB.value, (newFouls, oldFouls) => {
-    if (oldFouls !== undefined && newFouls > oldFouls && timer.isRunning.value) {
-      const foulsAdded = newFouls - oldFouls;
-      timeline.addEvent('foul', 'B', foulsAdded, timer.timeElapsed.value);
+    if (oldFouls !== undefined && newFouls !== oldFouls && timer.isRunning.value) {
+      const foulsChanged = newFouls - oldFouls;
+      timeline.addEvent('foul', 'B', foulsChanged, timer.timeElapsed.value);
+      // Trackear en Amplitude
+      trackEvent(foulsChanged > 0 ? GameEvents.FOUL_ADDED : GameEvents.FOUL_REMOVED, {
+        player: 'B',
+        fouls: Math.abs(foulsChanged),
+        newFouls,
+        oldFouls,
+        timeElapsed: timer.timeElapsed.value,
+      });
     }
   });
 
   // Capturar eventos de salidas
   watch(() => exits.exitsA.value, (newExits, oldExits) => {
-    if (oldExits !== undefined && newExits > oldExits && timer.isRunning.value) {
-      const exitsAdded = newExits - oldExits;
-      timeline.addEvent('exit', 'A', exitsAdded, timer.timeElapsed.value);
+    if (oldExits !== undefined && newExits !== oldExits && timer.isRunning.value) {
+      const exitsChanged = newExits - oldExits;
+      timeline.addEvent('exit', 'A', exitsChanged, timer.timeElapsed.value);
+      // Trackear en Amplitude
+      trackEvent(exitsChanged > 0 ? GameEvents.EXIT_ADDED : GameEvents.EXIT_REMOVED, {
+        player: 'A',
+        exits: Math.abs(exitsChanged),
+        newExits,
+        oldExits,
+        timeElapsed: timer.timeElapsed.value,
+      });
     }
   });
 
   watch(() => exits.exitsB.value, (newExits, oldExits) => {
-    if (oldExits !== undefined && newExits > oldExits && timer.isRunning.value) {
-      const exitsAdded = newExits - oldExits;
-      timeline.addEvent('exit', 'B', exitsAdded, timer.timeElapsed.value);
+    if (oldExits !== undefined && newExits !== oldExits && timer.isRunning.value) {
+      const exitsChanged = newExits - oldExits;
+      timeline.addEvent('exit', 'B', exitsChanged, timer.timeElapsed.value);
+      // Trackear en Amplitude
+      trackEvent(exitsChanged > 0 ? GameEvents.EXIT_ADDED : GameEvents.EXIT_REMOVED, {
+        player: 'B',
+        exits: Math.abs(exitsChanged),
+        newExits,
+        oldExits,
+        timeElapsed: timer.timeElapsed.value,
+      });
     }
   });
 
@@ -145,16 +206,27 @@ export function useGame() {
     exits.reset();
     timeline.reset(); // Resetear el timeline
     hasPlayedSound = false; // Resetear el flag al resetear el juego
+    // Trackear reset
+    trackEvent(GameEvents.GAME_RESET);
   };
 
   const startGame = () => {
     if (!gameStatus.value.isFinished) {
       timer.start();
+      // Trackear inicio del juego
+      trackEvent(GameEvents.GAME_STARTED, {
+        maxTime: timer.timeRemaining.value,
+      });
     }
   };
 
   const stopGame = () => {
     timer.stop();
+    // Trackear pausa del juego
+    trackEvent(GameEvents.GAME_STOPPED, {
+      timeElapsed: timer.timeElapsed.value,
+      timeRemaining: timer.timeRemaining.value,
+    });
   };
 
   return {

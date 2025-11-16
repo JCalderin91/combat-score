@@ -1,5 +1,6 @@
 import { ref, reactive, watch } from 'vue';
 import type { GameConfig } from '../config/gameConfig';
+import { trackEvent, GameEvents } from '../utils/analytics';
 
 const STORAGE_KEY = 'combat-score-config';
 
@@ -48,8 +49,14 @@ export const isConfigOpen = ref(false);
 // Guardar automáticamente cuando cambie la configuración
 watch(
   () => ({ ...gameConfig }),
-  (newConfig) => {
+  (newConfig, oldConfig) => {
     saveConfigToStorage(newConfig);
+    // Trackear cambios de configuración
+    if (oldConfig && JSON.stringify(newConfig) !== JSON.stringify(oldConfig)) {
+      trackEvent(GameEvents.CONFIG_CHANGED, {
+        ...newConfig,
+      });
+    }
   },
   { deep: true }
 );
@@ -57,6 +64,7 @@ watch(
 export function useConfig() {
   const openConfig = () => {
     isConfigOpen.value = true;
+    trackEvent(GameEvents.CONFIG_OPENED);
   };
 
   const closeConfig = () => {

@@ -1,4 +1,5 @@
 import { ref } from 'vue';
+import { trackEvent, GameEvents } from '../utils/analytics';
 
 export interface TimelineEvent {
   id: string;
@@ -61,6 +62,9 @@ export function useTimeline() {
 
   const openTimeline = () => {
     isOpen.value = true;
+    trackEvent(GameEvents.TIMELINE_OPENED, {
+      eventsCount: events.value.length,
+    });
   };
 
   const closeTimeline = () => {

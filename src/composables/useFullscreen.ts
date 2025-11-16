@@ -1,4 +1,5 @@
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { trackEvent, GameEvents } from '../utils/analytics';
 
 export function useFullscreen() {
   const isFullscreen = ref(false);
@@ -53,6 +54,13 @@ export function useFullscreen() {
       await enterFullscreen();
     }
   };
+
+  // Trackear cambios en fullscreen
+  watch(isFullscreen, (newValue) => {
+    trackEvent(GameEvents.FULLSCREEN_TOGGLED, {
+      isFullscreen: newValue,
+    });
+  });
 
   // Escuchar cambios en el estado de pantalla completa
   onMounted(() => {
