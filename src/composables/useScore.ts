@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue';
-import { gameConfig } from '../config/gameConfig';
+import { gameConfig } from './useConfig';
 
 export function useScore() {
   const scoreA = ref(0);

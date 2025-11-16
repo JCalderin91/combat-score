@@ -1,5 +1,5 @@
 import { ref, watch } from 'vue';
-import { gameConfig } from '../config/gameConfig';
+import { gameConfig } from './useConfig';
 
 export function useFouls(onPointAwarded: (player: 'A' | 'B') => void) {
   const foulsA = ref(0);

@@ -5,10 +5,6 @@ export interface GameConfig {
   maxTimeInSeconds: number;
 }
 
-export const gameConfig: GameConfig = {
-  pointsToWin: 7,
-  foulsForPoint: 2,
-  exitsForWarning: 3,
-  maxTimeInSeconds: 90, // 1 minuto y 30 segundos
-};
+// La configuración reactiva ahora se maneja en useConfig.ts
+// Este archivo solo exporta el tipo para compatibilidad
 

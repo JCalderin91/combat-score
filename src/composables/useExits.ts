@@ -1,5 +1,5 @@
 import { ref, computed, watch } from 'vue';
-import { gameConfig } from '../config/gameConfig';
+import { gameConfig } from './useConfig';
 
 export function useExits(onMaxExitsReached: (player: 'A' | 'B') => void) {
   const exitsA = ref(0);

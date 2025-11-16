@@ -1,10 +1,21 @@
-import { ref, computed } from 'vue';
-import { gameConfig } from '../config/gameConfig';
+import { ref, computed, watch } from 'vue';
+import { gameConfig } from './useConfig';
 
 export function useTimer() {
   const timeRemaining = ref(gameConfig.maxTimeInSeconds);
   const isRunning = ref(false);
   let intervalId: number | null = null;
+
+  // Reaccionar a cambios en el tiempo máximo
+  watch(
+    () => gameConfig.maxTimeInSeconds,
+    (newMaxTime) => {
+      if (!isRunning.value) {
+        // Solo actualizar si el juego no está corriendo
+        timeRemaining.value = newMaxTime;
+      }
+    }
+  );
 
   const minutes = computed(() => {
     return Math.floor(timeRemaining.value / 60);
