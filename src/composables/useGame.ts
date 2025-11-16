@@ -3,11 +3,13 @@ import { useTimer } from './useTimer';
 import { useScore } from './useScore';
 import { useFouls } from './useFouls';
 import { useExits } from './useExits';
+import { useTimeline } from './useTimeline';
 import { playWhistleSound } from '../utils/sounds';
 
 export function useGame() {
   const timer = useTimer();
   const score = useScore();
+  const timeline = useTimeline();
   let hasPlayedSound = false; // Evitar reproducir múltiples veces
   
   // Callback para cuando se otorga un punto por faltas
@@ -91,11 +93,57 @@ export function useGame() {
     }
   });
 
+  // Capturar eventos de puntos
+  watch(() => score.scoreA.value, (newScore, oldScore) => {
+    if (oldScore !== undefined && newScore > oldScore && timer.isRunning.value) {
+      const pointsAdded = newScore - oldScore;
+      timeline.addEvent('point', 'A', pointsAdded, timer.timeElapsed.value);
+    }
+  });
+
+  watch(() => score.scoreB.value, (newScore, oldScore) => {
+    if (oldScore !== undefined && newScore > oldScore && timer.isRunning.value) {
+      const pointsAdded = newScore - oldScore;
+      timeline.addEvent('point', 'B', pointsAdded, timer.timeElapsed.value);
+    }
+  });
+
+  // Capturar eventos de faltas
+  watch(() => fouls.foulsA.value, (newFouls, oldFouls) => {
+    if (oldFouls !== undefined && newFouls > oldFouls && timer.isRunning.value) {
+      const foulsAdded = newFouls - oldFouls;
+      timeline.addEvent('foul', 'A', foulsAdded, timer.timeElapsed.value);
+    }
+  });
+
+  watch(() => fouls.foulsB.value, (newFouls, oldFouls) => {
+    if (oldFouls !== undefined && newFouls > oldFouls && timer.isRunning.value) {
+      const foulsAdded = newFouls - oldFouls;
+      timeline.addEvent('foul', 'B', foulsAdded, timer.timeElapsed.value);
+    }
+  });
+
+  // Capturar eventos de salidas
+  watch(() => exits.exitsA.value, (newExits, oldExits) => {
+    if (oldExits !== undefined && newExits > oldExits && timer.isRunning.value) {
+      const exitsAdded = newExits - oldExits;
+      timeline.addEvent('exit', 'A', exitsAdded, timer.timeElapsed.value);
+    }
+  });
+
+  watch(() => exits.exitsB.value, (newExits, oldExits) => {
+    if (oldExits !== undefined && newExits > oldExits && timer.isRunning.value) {
+      const exitsAdded = newExits - oldExits;
+      timeline.addEvent('exit', 'B', exitsAdded, timer.timeElapsed.value);
+    }
+  });
+
   const resetGame = () => {
     timer.reset();
     score.reset();
     fouls.reset();
     exits.reset();
+    timeline.reset(); // Resetear el timeline
     hasPlayedSound = false; // Resetear el flag al resetear el juego
   };
 
@@ -118,6 +166,8 @@ export function useGame() {
     ...fouls,
     // Exits
     ...exits,
+    // Timeline
+    timeline,
     // Game status
     gameStatus,
     // Actions

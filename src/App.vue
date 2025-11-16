@@ -7,16 +7,31 @@ import PlayerScore from './components/PlayerScore.vue';
 import PlayerControls from './components/PlayerControls.vue';
 import PlayerStats from './components/PlayerStats.vue';
 import ConfigPanel from './components/ConfigPanel.vue';
+import TimelinePanel from './components/TimelinePanel.vue';
 
 const game = useGame();
 const { openConfig } = useConfig();
 const { isFullscreen, toggleFullscreen } = useFullscreen();
+const { openTimeline } = game.timeline;
 </script>
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 p-2 sm:p-4 md:p-8 relative">
     
     <!-- Botones flotantes superiores -->
+    <div class="fixed top-2 left-2 sm:top-3 sm:left-3 z-30">
+      <!-- Botón de timeline/historial -->
+      <button
+        @click="openTimeline"
+        class="bg-white/80 hover:bg-gray-100 text-gray-600 hover:text-gray-800 p-1.5 sm:p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 backdrop-blur-sm border border-gray-200"
+        aria-label="Historial del combate"
+      >
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
     <div class="fixed top-2 right-2 sm:top-3 sm:right-3 z-30 flex gap-2">
       <!-- Botón de pantalla completa -->
       <button
@@ -49,6 +64,9 @@ const { isFullscreen, toggleFullscreen } = useFullscreen();
 
     <!-- Panel de configuración -->
     <ConfigPanel />
+    
+    <!-- Panel de timeline/historial -->
+    <TimelinePanel />
     
     <!-- Layout Portrait (vertical) -->
     <div class="max-w-6xl mx-auto space-y-3 sm:space-y-6 md:space-y-8 landscape:hidden">
