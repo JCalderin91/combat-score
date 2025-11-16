@@ -21,7 +21,7 @@ const colorClasses = {
 
 <template>
   <div 
-    class="rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 border-2 sm:border-4"
+    class="rounded-xl sm:rounded-2xl shadow-2xl p-2 sm:p-6 md:p-8 border-2 sm:border-4"
     :class="[colorClasses[color].bg, colorClasses[color].border]">
     <h2 class="text-lg sm:text-xl md:text-2xl font-bold text-white text-center mb-2 sm:mb-4">
       {{ playerName }}

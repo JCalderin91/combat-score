@@ -59,7 +59,7 @@ const colorClasses = {
         <div 
           class="text-[10px] sm:text-xs md:text-sm font-semibold uppercase tracking-wider mb-0.5 sm:mb-1"
           :class="colorClasses[color].label">
-          {{ label }} {{ playerName }} {{ reverse ? 'invertido' : 'normal' }}
+          {{ label }} {{ playerName }}
         </div>
         <div class="text-white text-2xl sm:text-3xl font-bold font-mono">{{ count }}</div>
       </div>
